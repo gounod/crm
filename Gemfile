@@ -22,6 +22,8 @@ gem "mysql2"
 
 gem 'responders', '~> 2.0'
 
+gem 'tumblr-api'
+
 gem 'ckeditor'
 
 #User Roles https://github.com/RolifyCommunity/rolify

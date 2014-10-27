@@ -1,22 +1,36 @@
 
 <div class="container-fluid">
-<div class="row">
-  <div class="col-xs-12 well ">
-    <h2>Portal WEG Gounodstraße 47 - 57</h2>
-    <p>Hier entsteht langsam eine Kommunikationsplatform für die WEG Mitglieder der Gounodstrasse 47 - 57. Nach einem <%= link_to "Login", "users/sign_in" %> gibt es hier die Möglichkeit Themen zu diskutieren und Umfragen zu erstellen. Die Plattform wird gerade noch entwickelt und jedes Feedback hierzu ist gerne gesehen. Anregungen und Wünsche hierzu können bereits jetzt in den Themen besprochen werden.</p>
-    <p>Das Bautagegebuch wird weiterhin öffentlich verfügbar bleiben und ist nun unter der Url <%= link_to "blog.gounod.berlin", "http://blog.gounod.berlin" %> direkt erreichbar.</p>
-    <p>Die geschlossenen Bereiche sind nur mit einer bereits im System bekannten Emailadresse zu erreichen. Die Accounts hierfür werden von Hand angelegt und verwaltet. Ein automatisiertes registrieren ist nicht geplant. Mit den Emailadressen, der bereits bestätigten Newsletterregistrierungen, ist eine Anmeldung jetzt schon möglich</p>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-xs-12 col-md-6 well left">
-    Klicken Sie hier um zum <a href="http://blog.gounod.berlin" class="btn btn-primary" target="_blank">Bautagebuch</a> zu kommen.
+  <div class="row">
+    <div class="col-xs-12 well ">
+      <h2>Portal WEG Gounodstraße 47 - 57</h2>
+      <p>Hier entsteht langsam eine Kommunikationsplatform für die WEG Mitglieder der Gounodstrasse 47 - 57. Nach einem <%= link_to "Login", "users/sign_in" %> gibt es hier die Möglichkeit Themen zu diskutieren und Umfragen zu erstellen. Die Plattform wird gerade noch entwickelt und jedes Feedback hierzu ist gerne gesehen. Anregungen und Wünsche hierzu können bereits jetzt in den Themen besprochen werden.</p>
+      <p>Das Bautagegebuch wird weiterhin öffentlich verfügbar bleiben und ist nun unter der Url <%= link_to "blog.gounod.berlin", "http://blog.gounod.berlin" %> direkt erreichbar.</p>
+      <p>Die geschlossenen Bereiche sind nur mit einer bereits im System bekannten Emailadresse zu erreichen. Die Accounts hierfür werden von Hand angelegt und verwaltet. Ein automatisiertes registrieren ist nicht geplant. Mit den Emailadressen, der bereits bestätigten Newsletterregistrierungen, ist eine Anmeldung jetzt schon möglich</p>
+    </div>
   </div>
-  <div class="col-xs-12 col-md-6 well right">
-    Klicken Sie hier um zu den <%= link_to "Themen", discussions_path(), :class => "btn btn-primary" %> zu kommen.
+
+  <div class="row">
+    <div class="col-xs-12 col-md-6 well left">
+      Klicken Sie hier um zum <a href="http://blog.gounod.berlin" class="btn btn-primary" target="_blank">Bautagebuch</a> zu kommen.
+    </div>
+    <div class="col-xs-12 col-md-6 well right">
+      Klicken Sie hier um zu den <%= link_to "Themen", discussions_path(), :class => "btn btn-primary" %> zu kommen.
+    </div>
   </div>
-</div>
+
+  <% begin %>
+    <% post_image_url = @last_post.first["photo_url"].select{|a| a['max_width'] == '500'}.first['__content__'] %>
+  <% rescue %>
+    <% post_image_url = nil %>
+  <% end %>
+  <% if post_image_url.present? %>
+    <div class="row">
+
+        <%= image_tag post_image_url, :class => "img-rounded col-xs-12 well" %>
+    </div>
+  <% end %>
+
 </div>
 
 
