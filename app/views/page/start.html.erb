@@ -26,8 +26,12 @@
   <% end %>
   <% if post_image_url.present? %>
     <div class="row">
-
-        <%= image_tag post_image_url, :class => "img-rounded col-xs-12 well" %>
+        <div class="well col-xs-12">
+          <%= image_tag post_image_url, :class => "img-rounded", :style=>"width:100%" %>
+          <div class="caption">
+            <p style="float:right"><%= DateTime.parse(@last_post.first['date_gmt']).strftime("%d.%m.%Y") %></p>
+          </div>
+        </div>
     </div>
   <% end %>
 
