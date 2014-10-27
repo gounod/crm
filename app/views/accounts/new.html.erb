@@ -2,4 +2,6 @@
 <div class="page-header">
   <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
-<%= render :partial => 'form' %>
+<%= form_for @account, :url => accounts_path(), :html => { :class => "form-horizontal user", :role => "form", :method => :post } do |f| %>
+  <%= render :partial => 'form', :object => f %>
+<% end %>

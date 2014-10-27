@@ -1,4 +1,4 @@
-<%= form_for @account, :url => account_path(@account), :html => { :class => "form-horizontal user", :role => "form" } do |f| %>
+<% f ||= form %>
 
   <% if @account.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -100,5 +100,3 @@
       <%= f.submit "Speichern", :class => 'btn btn-primary' %>
     </div>
   </div>
-
-<% end %>

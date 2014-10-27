@@ -50,6 +50,9 @@ class AccountsController < ApplicationController
   # POST /users.json
   def create
     @account = User.new(user_params)
+    rand_pass = Digest::MD5.hexdigest(Time.now.to_i.to_s)
+    @account.password = rand_pass
+    @account.password_confirmation = rand_pass
 
     respond_to do |format|
       if @account.save
