@@ -93,4 +93,7 @@ Rails.application.configure do
     password: "ZgJ699PM1DgIHa_ONE1wbQ",
     enable_starttls_auto: false
   }
+
+  YUBIKEYCLIENTID = "19340"
+  YUBIKEYSECRETKEY = "M+U1TbvrhHeod3R/kR5jz1EV2/E="
 end

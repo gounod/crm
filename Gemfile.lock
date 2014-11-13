@@ -219,6 +219,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
+    yubikey (1.4.1)
 
 PLATFORMS
   ruby
@@ -254,3 +255,4 @@ DEPENDENCIES
   twitter-bootstrap-rails!
   uglifier
   unicorn
+  yubikey

@@ -9,9 +9,10 @@ class User < ActiveRecord::Base
   before_save :reset_authentication_token
   has_many :discussions
   has_many :articles
+  attr_accessor :otp
 
   acts_as_voter
-
+  before_save :set_yubikey
 
   def short_name
     if self.privacy
@@ -24,4 +25,14 @@ class User < ActiveRecord::Base
       "WEG-Mitglied"
     end
   end
+
+  def set_yubikey
+    if self.otp.present?
+      otp_yubikey = Yubikey::OTP::Verify.new(:api_id => YUBIKEYCLIENTID, :api_key => YUBIKEYSECRETKEY, :otp => self.otp)
+      if otp_yubikey.valid?
+        self.yubikey = self.otp[0..11]
+      end
+    end
+  end
+
 end

@@ -11,14 +11,26 @@ class AccountsController < ApplicationController
 
   def login
     if params[:user].present? && params[:user][:email].present?
-      user = User.find_by_email(params[:user][:email])
-      if user.present?
-        user.save
-        Mailer.login(user, request.referer).deliver
-        flash[:notice] = "Es wurde eine Email an Ihre Adresse gesendet. Die Email enthält einen einmal gültigen Anmeldelink!"
-        redirect_to root_path()
+
+      if params[:user][:email].include?("@")
+        user = User.find_by_email(params[:user][:email])
+        if user.present?
+          user.save
+          Mailer.login(user, request.referer).deliver
+          flash[:notice] = "Es wurde eine Email an Ihre Adresse gesendet. Die Email enthält einen einmal gültigen Anmeldelink!"
+          redirect_to root_path()
+        else
+          flash[:notice] = "Beim Anmelden ist ein Fehler aufgetreten."
+        end
       else
-        flash[:notice] = "Beim Anmelden ist ein Fehler aufgetreten."
+        yubitoken = params[:user][:email][0..11]
+        user = User.find_by_yubikey(yubitoken)
+        otp_yubikey = Yubikey::OTP::Verify.new(:api_id => YUBIKEYCLIENTID, :api_key => YUBIKEYSECRETKEY, :otp => params[:user][:email])
+        if otp_yubikey.valid? && user.present?
+          sign_in(user)
+          flash[:notice] = "Sie sind erfolgreich mit ihrem Yubikey angemeldet."
+          redirect_to root_path()
+        end
       end
     else
       flash[:notice] = "Beim Anmelden ist ein Fehler aufgetreten."
@@ -97,7 +109,7 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:privacy, :gender, :first_name, :last_name, :apartment, :email, :notify_me_on_discussion_create, :notify_me_on_new_articles_i_follow, :notify_me_on_new_articles_i_moderate)
+      params.require(:user).permit(:otp, :privacy, :gender, :first_name, :last_name, :apartment, :email, :notify_me_on_discussion_create, :notify_me_on_new_articles_i_follow, :notify_me_on_new_articles_i_moderate)
     end
 
     def check_admin_role

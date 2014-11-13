@@ -51,6 +51,8 @@
     <%=f.error_span(:email) %>
   </div>
 
+
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Schutz der Privatsphäre</h3>
@@ -92,6 +94,26 @@
           Benachrichtige mich, wenn ein neuer Beitrag in einem Thema erstellt wird, dem ich folge
         </label>
       </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Anmeldung</h3>
+    </div>
+    <div class="panel-body">
+      Alternativ zur Anmeldung mit ihrer Email-Adresse können Sie Ihr Konto auch mit Ihrem <a href="https://www.yubico.com">Yubikey</a> verknüpfen.
+      Geben Sie dazu bitte in das folgende Textfeld ihr OTP (one time password) ein. Sobald Ihr Konto erfolgreich verknüpft ist, können Sie bei der Anmeldung statt ihrer Emailadresse auch ein OTP eintragen.
+        <div class="form-group">
+          <%= f.label :otp, "Yubikey", :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
+            <%= f.text_field :otp, :class => 'form-control', :placeholder => "'one time passwort' ihres Yubikeys" %>
+          </div>
+          <%=f.error_span(:otp) %>
+        </div>
+        <% if @account.yubikey.present? %>
+          <strong>Ihr Konto ist mit dem Yubikey '<%= @account.yubikey %>' verbunden!</strong>
+        <% end %>
     </div>
   </div>
 

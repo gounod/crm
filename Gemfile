@@ -25,6 +25,7 @@ gem 'responders', '~> 2.0'
 gem 'tumblr-api'
 
 gem 'ckeditor'
+gem 'yubikey'
 
 #User Roles https://github.com/RolifyCommunity/rolify
 gem "rolify"
