@@ -21,6 +21,7 @@ class AccountsController < ApplicationController
           redirect_to root_path()
         else
           flash[:notice] = "Beim Anmelden ist ein Fehler aufgetreten."
+          redirect_to :back
         end
       else
         yubitoken = params[:user][:email][0..11]
