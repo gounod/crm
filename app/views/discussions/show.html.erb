@@ -36,6 +36,11 @@
     <%= link_to "Thema wieder öffnen", change_state_discussion_path(@discussion, :state => "opened"), :class => 'btn btn-default' %>
   <% end %>
 <% end %>
+<% if @discussion.followers.include?(current_user) %>
+  <%= link_to "Diesem Thema nicht mehr folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning' %>
+<% else %>
+  <%= link_to "Diesem Thema folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning' %>
+<% end %>
 <% if current_user.has_role?(:admin) %>
 <%= link_to "Löschen",
               discussion_path(@discussion),

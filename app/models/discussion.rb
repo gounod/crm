@@ -9,6 +9,9 @@ class Discussion < ActiveRecord::Base
 
   after_create :send_notifications
 
+  has_many :discussion_users
+  has_many :followers, :through => :discussion_users, :source => :user
+
 
   def send_notifications
     User.where(:notify_me_on_discussion_create => true).each do |user|

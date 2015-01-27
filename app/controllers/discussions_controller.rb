@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class DiscussionsController < ApplicationController
-  before_action :set_discussion, only: [:show, :edit, :update, :destroy, :change_state, :vote]
+  before_action :set_discussion, only: [:show, :edit, :update, :destroy, :change_state, :vote, :change_following]
   before_action :authenticate_user!
 
   def index
@@ -33,6 +33,15 @@ class DiscussionsController < ApplicationController
       @discussion.save
     end
     redirect_to discussions_path(:state => @state)
+  end
+
+  def change_following
+    if @discussion.followers.include?(current_user)
+      @discussion.followers.delete(current_user)
+    else
+      @discussion.followers << current_user
+    end
+    redirect_to discussion_path(@discussion)
   end
 
   def create

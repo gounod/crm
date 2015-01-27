@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     member do
       get 'change_state'
       get 'vote'
+      get 'change_following'
     end
     resources :articles do
       member do

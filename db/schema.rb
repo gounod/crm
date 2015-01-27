@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113200058) do
+ActiveRecord::Schema.define(version: 20150127205401) do
 
   create_table "articles", force: true do |t|
     t.text     "description"
     t.integer  "user_id"
     t.integer  "discussion_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "discussion_users", force: true do |t|
+    t.integer  "discussion_id"
+    t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   before_save :reset_authentication_token
   has_many :discussions
   has_many :articles
+
+  has_many :discussion_users
+  has_many :favorites, :through => :discussion_users, :source => :discussion
+
   attr_accessor :otp
 
   acts_as_voter

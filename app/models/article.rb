@@ -20,9 +20,9 @@ class Article < ActiveRecord::Base
       Mailer.new_article(self.discussion.user,self).deliver
     end
 
-    # User.where(:notify_me_on_new_articles_i_follow => true).each do |user|
-    #   Mailer.new_article(user,self).deliver
-    # end
+    self.discussion.followers.where(:notify_me_on_new_articles_i_follow => true).each do |user|
+      Mailer.new_article(user,self).deliver
+    end
   end
 
 end
