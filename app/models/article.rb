@@ -16,8 +16,8 @@ class Article < ActiveRecord::Base
 
   def send_notifications
     #mail an Moderator, wenn er das will
-    if self.user.notify_me_on_new_articles_i_moderate
-      Mailer.new_article(self.user,self).deliver
+    if self.try(:discussion).try(:user).try(:notify_me_on_new_articles_i_moderate)
+      Mailer.new_article(self.discussion.user,self).deliver
     end
 
     # User.where(:notify_me_on_new_articles_i_follow => true).each do |user|
