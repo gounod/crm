@@ -3,7 +3,7 @@
 class AccountsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, :except => [:login]
-  before_action :check_admin_role, :except => [:login]
+  before_action :check_admin_role, :except => [:login, :profile, :update]
 
   def profile
     @account = current_user
