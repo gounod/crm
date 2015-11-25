@@ -20,7 +20,7 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit "Speichern", :class => 'btn btn-primary' %>
+      <%= f.submit "Speichern", :class => 'btn btn-primary', data: { disable_with: "Nachricht wird gesendet..."} %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 discussion_path(@discussion), :class => 'btn btn-default' %>
     </div>
