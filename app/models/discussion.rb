@@ -7,11 +7,17 @@ class Discussion < ActiveRecord::Base
   acts_as_taggable
   acts_as_votable
 
+  after_create :add_auto_followers
   after_create :send_notifications
 
   has_many :discussion_users
   has_many :followers, :through => :discussion_users, :source => :user
 
+  def add_auto_followers
+    User.where(:auto_follow => true).each do |user|
+      followers << user unless followers.include?(user)
+    end
+  end
 
   def send_notifications
     User.where(:notify_me_on_discussion_create => true).each do |user|
