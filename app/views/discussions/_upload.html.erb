@@ -1,0 +1,56 @@
+<script>
+$(document).ready(function(){
+  // disable auto discover
+  Dropzone.autoDiscover = false;
+
+  // grap our upload form by its id
+  $("#new_upload").dropzone({
+
+    // restrict image size to a maximum 30MB
+    maxFilesize: 30,
+    // changed the passed param to one accepted by
+    // our rails app
+    paramName: "upload[image]",
+    // show remove links on each image upload
+    addRemoveLinks: true,
+
+    sending: function(file, xhr, formData) {
+      // Will send the filesize along with the file as POST data.
+      formData.append("upload[discussion_id]", <%= @discussion.id%>);
+    },
+    // if the upload was successful
+    success: function(file, response){
+      // find the remove button link of the uploaded file and give it an id
+      // based of the fileID response from the server
+      $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+      // add the dz-success class (the green tick sign)
+      $(file.previewElement).addClass("dz-success");
+    },
+    //when the remove button is clicked
+    removedfile: function(file){
+      // grap the id of the uploaded file we set earlier
+      var id = $(file.previewTemplate).find('.dz-remove').attr('id');
+
+      // make a DELETE ajax request to delete the file
+      $.ajax({
+        type: 'DELETE',
+        url: '/uploads/' + id,
+        success: function(data){
+          $("#" + id).closest("div.dz-preview").fadeOut('slow');
+          console.log(data.message);
+        }
+      });
+    }
+  });
+});
+</script>
+
+<%= form_for(@upload, html: { multipart: true, class: "dropzone"}) do |f|  %>
+  <div class="fallback">
+    <%= f.hidden_field :discussion_id %><br>
+    <%= f.file_field :image %><br>
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>
+
+<br>

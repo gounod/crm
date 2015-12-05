@@ -15,6 +15,7 @@ class DiscussionsController < ApplicationController
   end
 
   def show
+    @upload = Upload.new(discussion_id: @discussion.id)
     respond_with(@discussion)
   end
 

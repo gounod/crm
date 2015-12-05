@@ -6,6 +6,7 @@ class Discussion < ActiveRecord::Base
   has_many :articles, :dependent => :delete_all
   acts_as_taggable
   acts_as_votable
+  has_many :uploads
 
   after_create :add_auto_followers
   after_create :send_notifications

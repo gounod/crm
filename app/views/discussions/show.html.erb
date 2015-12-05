@@ -1,6 +1,6 @@
 <%- model_class = Discussion -%>
 <div class="page-header">
-  <h1>Thema: <%= @discussion.title %>
+  <h1><span class="hidden-sm hidden-xs">Thema: </span><%= @discussion.title %>
     <div style="float:right">
       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>"), vote_discussion_path(@discussion, :vote => "like") %>
       &nbsp;
@@ -32,7 +32,36 @@
   </dl>
 </div>
 
+
+<div class="collapse" id="collapseGallery">
+
+    <div class="row">
+      <% @discussion.uploads.each do |upload| %>
+        <div class="col-xs-6 col-md-3">
+          <% if current_user.present? && current_user.has_role?(:admin) %>
+            <%= link_to "Delete", upload_path(upload), :method => :delete, :class => 'btn btn-xs btn-danger', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) } %>
+          <% end %>
+          <% if upload.image_file? %>
+            <%= link_to image_tag(upload.image.url(:medium), :style => "height:150px;"), upload.image.url(:original), :class => "thumbnail", "data-toggle" => "lightbox" %>
+          <% else %>
+            <%= link_to upload.image_file_name, upload.image.url(:original), :class => "thumbnail", "data-toggle" => "lightbox" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-sm-12 col-xs-12 col-md-12">
+      <%= render partial: "upload" %>
+    </div>
+  
+</div>
+
+
+
 <div class="col-sm-12">
+<a class="btn btn-primary col-xs-12 col-sm-12 col-md-4" role="button" data-toggle="collapse" href="#collapseGallery" aria-expanded="false" aria-controls="collapseGallery">
+  Bildergallerie einblenden
+</a>
 <% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion) || current_user.has_role?(:admin) %>
   <%= link_to "Thema bearbeiten", edit_discussion_path(@discussion), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4' %>
   <% if @discussion.state == "opened" %>
