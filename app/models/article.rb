@@ -10,8 +10,7 @@ class Article < ActiveRecord::Base
   acts_as_votable
 
   def set_discussion_date
-    self.discussion.updated_at = Time.now
-    self.discussion.save
+    self.discussion.touch
   end
 
   def send_notifications

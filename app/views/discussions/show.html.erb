@@ -54,7 +54,7 @@
 <div>
   <h2>Kommentare</h2>
 
-  <% @discussion.articles.each do |article| %>
+  <% @discussion.articles.order("created_at DESC").each do |article| %>
     <div class="article_element well">
       <div class="row description">
         <div class="col-md-12">
