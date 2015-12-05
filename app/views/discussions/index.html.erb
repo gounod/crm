@@ -7,49 +7,51 @@
       <%= link_to "Neues Thema erstellen", new_discussion_path, :class => 'btn btn-primary', :remote => true %>
   </h1>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Titel</th>
-      <th>Moderator</th>
-      <th><%= model_class.human_attribute_name(:state) %></th>
-      <th>Beiträge</th>
-      <th><span class='glyphicon glyphicon-thumbs-up'></span></th>
-      <th><span class='glyphicon glyphicon-thumbs-down'></span></th>
-      <th>Erstellt am</th>
-      <th>Letzer Beitrag am</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @discussions.each do |discussion| %>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= link_to discussion.title, discussion_path(discussion) %></td>
-        <% if discussion.user.present? && discussion.user.privacy %>
-          <td><%= link_to "mailto:#{discussion.try(:user).try(:email)}?subject=#{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
-        <% else %>
-          <td><%= link_to "mailto:metz@gounod.berlin?subject=ID#{discussion.id}: #{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
-        <% end %>
-        <td><%= tag_label(t(discussion.state) , :success) %></td>
-        <td><center><%= badge(discussion.articles.count, :warning) %></center></td>
-        <td><%= discussion.count_votes_up %></td>
-        <td><%= discussion.count_votes_down %></td>
-        <td><%= discussion.created_at.strftime("%d.%m.%Y %H:%M Uhr") %></td>
-        <td><%= discussion.articles.try(:last).try(:updated_at).try(:strftime, "%d.%m.%Y %H:%M Uhr") %></td>
-        <td>
-          <%= link_to "Ansehen", discussion_path(discussion), :class => 'btn btn-success btn-xs' %>
-          <% if discussion.user == current_user || current_user.has_role?(:moderator, discussion) || current_user.has_role?(:admin) %>
-            <%= link_to "Bearbeiten", edit_discussion_path(discussion), :class => 'btn btn-default btn-xs' %>
-          <% end %>
-          <% if current_user.has_role?(:admin) %>
-            <%= link_to "Löschen",
-                      discussion_path(discussion),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-          <% end %>
-        </td>
+        <th>Titel</th>
+        <th>Moderator</th>
+        <th><%= model_class.human_attribute_name(:state) %></th>
+        <th>Beiträge</th>
+        <th><span class='glyphicon glyphicon-thumbs-up'></span></th>
+        <th><span class='glyphicon glyphicon-thumbs-down'></span></th>
+        <th>Erstellt am</th>
+        <th>Letzer Beitrag am</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @discussions.each do |discussion| %>
+        <tr>
+          <td><%= link_to discussion.title, discussion_path(discussion) %></td>
+          <% if discussion.user.present? && discussion.user.privacy %>
+            <td><%= link_to "mailto:#{discussion.try(:user).try(:email)}?subject=#{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
+          <% else %>
+            <td><%= link_to "mailto:metz@gounod.berlin?subject=ID#{discussion.id}: #{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
+          <% end %>
+          <td><%= tag_label(t(discussion.state) , :success) %></td>
+          <td><center><%= badge(discussion.articles.count, :warning) %></center></td>
+          <td><%= discussion.count_votes_up %></td>
+          <td><%= discussion.count_votes_down %></td>
+          <td><%= discussion.created_at.strftime("%d.%m.%Y %H:%M Uhr") %></td>
+          <td><%= discussion.articles.try(:last).try(:updated_at).try(:strftime, "%d.%m.%Y %H:%M Uhr") %></td>
+          <td>
+            <%= link_to "Ansehen", discussion_path(discussion), :class => 'btn btn-success btn-xs' %>
+            <% if discussion.user == current_user || current_user.has_role?(:moderator, discussion) || current_user.has_role?(:admin) %>
+              <%= link_to "Bearbeiten", edit_discussion_path(discussion), :class => 'btn btn-default btn-xs' %>
+            <% end %>
+            <% if current_user.has_role?(:admin) %>
+              <%= link_to "Löschen",
+                        discussion_path(discussion),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-xs btn-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
