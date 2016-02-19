@@ -5,7 +5,7 @@
       <%= link_to "Offene Themen", discussions_path(:state => "opened"), :class => "btn #{@state.present? && @state == 'opened' ? 'btn-success' : 'btn-default'} " %>
       <%= link_to "Geschlossene Themen", discussions_path(:state => "closed"), :class => "btn #{@state.present? && @state == 'closed' ? 'btn-success' : 'btn-default'}" %>
       <%= link_to "Neues Thema erstellen", new_discussion_path, :class => 'btn btn-primary', :remote => true %>
-  
+
 </div>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -36,7 +36,7 @@
           <td><%= discussion.count_votes_up %></td>
           <td><%= discussion.count_votes_down %></td>
           <td class="hidden-sm hidden-xs"><%= discussion.created_at.strftime("%d.%m.%Y %H:%M Uhr") %></td>
-          <td><%= discussion.articles.try(:last).try(:updated_at).try(:strftime, "%d.%m.%Y %H:%M Uhr") %></td>
+          <td><%= discussion.articles.try(:first).try(:updated_at).try(:strftime, "%d.%m.%Y %H:%M Uhr") %></td>
           <td>
             <%= link_to "Ansehen", discussion_path(discussion), :class => 'btn btn-success btn-xs' %>
             <% if discussion.user == current_user || current_user.has_role?(:moderator, discussion) || current_user.has_role?(:admin) %>
