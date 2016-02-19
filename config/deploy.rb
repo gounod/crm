@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+lock '3.4.0'
 set :ssh_options, { :forward_agent => true }
 set :repository_cache, "git_cache"
 set :deploy_via, :remote_cache
