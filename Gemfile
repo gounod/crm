@@ -17,7 +17,7 @@ gem 'coffee-rails'#, '~> 4.0.0'
 # gem 'therubyracer',  platforms: :ruby
 
 gem 'execjs'
-gem 'therubyracer'
+#gem 'therubyracer'
 gem "mysql2"
 
 gem 'responders', '~> 2.0'
