@@ -11,6 +11,7 @@ class DiscussionsController < ApplicationController
     else
       @discussions = Discussion.all
     end
+    @discussions = @discussions.includes(:articles).order("articles.created_at DESC")
     respond_with(@discussions)
   end
 
