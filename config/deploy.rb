@@ -15,10 +15,10 @@ set :scm, :git
 set :bundle_flags, "--deployment --quiet --binstubs"
 
 set :use_sudo, false
-set :rbenv_ruby, '2.1.1'
+set :rbenv_ruby, '2.2.2'
 set :rbenv_path, '/home/gounod/.rbenv'
 set :rvm_type, :user                     # Defaults to: :auto
-set :rvm_ruby_version, '2.1.1'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.2.2'      # Defaults to: 'default'
 
 set :linked_files, %w{config/database.yml config/unicorn/production.rb config/unicorn.rb}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/system}
