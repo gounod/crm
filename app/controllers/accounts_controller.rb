@@ -110,7 +110,7 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:otp, :privacy, :gender, :first_name, :last_name, :apartment, :email, :notify_me_on_discussion_create, :notify_me_on_new_articles_i_follow, :notify_me_on_new_articles_i_moderate)
+      params.require(:user).permit(:auto_follow, :otp, :privacy, :gender, :first_name, :last_name, :apartment, :email, :notify_me_on_discussion_create, :notify_me_on_new_articles_i_follow, :notify_me_on_new_articles_i_moderate)
     end
 
     def check_admin_role
