@@ -8,10 +8,13 @@ class DiscussionsController < ApplicationController
     @state = params[:state]
     if @state.present?
       @discussions = Discussion.where(:state => @state)
+    elsif params[:tag].present?
+      @discussions = Discussion.tagged_with(params[:tag])
     else
       @discussions = Discussion.all
     end
     @discussions = @discussions.includes(:articles).order("articles.id DESC")
+    @tags = Discussion.all.tag_counts_on(:tags)
     respond_with(@discussions)
   end
 
