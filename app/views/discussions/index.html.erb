@@ -12,7 +12,10 @@
     Filter:
       <%= link_to "Alle", discussions_path(), :class => "btn btn-default" %>
     <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
-      <%= link_to tag.name, discussions_path(tag: tag.name), :class => "btn btn-default" %>
+      <%= link_to discussions_path(tag: tag.name), :class => "btn btn-default" do %>
+      <%= tag.name %>
+      <span class="badge"><%= tag.taggings_count %></span>
+      <% end %>
     <% end %>
     </div>
 </div>
