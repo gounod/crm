@@ -15,6 +15,7 @@
         <th class="hidden-sm hidden-xs">Moderator</th>
         <th class="hidden-sm hidden-xs"><%= model_class.human_attribute_name(:state) %></th>
         <th>Beiträge</th>
+        <th>Bilder</th>
         <th><span class='glyphicon glyphicon-thumbs-up'></span></th>
         <th><span class='glyphicon glyphicon-thumbs-down'></span></th>
         <th class="hidden-sm hidden-xs">Erstellt am</th>
@@ -33,6 +34,7 @@
           <% end %>
           <td class="hidden-sm hidden-xs"><%= tag_label(t(discussion.state) , :success) %></td>
           <td><center><%= badge(discussion.articles.count, :warning) %></center></td>
+          <td><center><%= badge(discussion.uploads.count, :warnng) %></center></td>
           <td><%= discussion.count_votes_up %></td>
           <td><%= discussion.count_votes_down %></td>
           <td class="hidden-sm hidden-xs"><%= discussion.created_at.strftime("%d.%m.%Y %H:%M Uhr") %></td>
