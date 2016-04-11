@@ -32,4 +32,6 @@ $(document).ready(function() {
       }
     });
 
+  $('.wysiwyg').wysihtml5();
+
 });

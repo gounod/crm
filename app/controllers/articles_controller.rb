@@ -29,7 +29,7 @@ class ArticlesController < ApplicationController
       @article.user = current_user
     end
     @article.save
-    respond_with(@article)
+    respond_with(@discussion)
   end
 
   def update

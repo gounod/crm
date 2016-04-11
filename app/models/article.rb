@@ -20,6 +20,7 @@ class Article < ActiveRecord::Base
     end
 
     self.discussion.followers.where(:notify_me_on_new_articles_i_follow => true).each do |user|
+      next unless discussion.readable_by(user)
       Mailer.new_article(user,self).deliver
     end
   end

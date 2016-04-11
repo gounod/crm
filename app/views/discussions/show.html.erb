@@ -1,6 +1,10 @@
 <%- model_class = Discussion -%>
 <div class="page-header">
-  <h1><span class="hidden-sm hidden-xs">Thema: </span><%= @discussion.title %>
+  <h1><span class="hidden-sm hidden-xs">
+    <% if !@discussion.public && @discussion.selected_users.any? %>
+      <span class="glyphicon glyphicon-lock"></span>
+    <% end %>
+    Thema: </span><%= @discussion.title %>
     <div style="float:right">
       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>"), vote_discussion_path(@discussion, :vote => "like") %>
       &nbsp;
@@ -32,6 +36,24 @@
   </dl>
 </div>
 
+<% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion) || current_user.has_role?(:admin) %>
+  <div class="col-sm-12 col-xs-12 col-md-12">
+    Zugriffsbeschränkt für: (Diese Liste ist nur für den Moderator sichtbar)
+    <dl class="dl-horizontal">
+      <% @discussion.selected_users.each do |email| %>
+        <dt><strong><%= email %></strong></dt>
+        <dd>
+        <% if @allowed_emails.include?(email) %>
+          <span class="glyphicon glyphicon-ok"></span>
+        <% else %>
+          <span class="glyphicon glyphicon-remove"></span> (Diese Email ist keinem WEG-Mitglied zugeordnet)
+        <% end %>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+<% end %>
+
 <div class="row">
   <div class="col-sm-12">
     <% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion) || current_user.has_role?(:admin) %>
@@ -55,7 +77,7 @@
                   :class => 'btn btn-danger col-xs-12 col-sm-12 col-md-4' %>
     <% end %>
 
-    <%= link_to "Kommentar schreiben", new_discussion_article_path(@discussion), :class => 'btn btn-primary col-xs-12 col-sm-12 col-md-4', :remote => true %>
+    <%= link_to "Kommentar schreiben", new_discussion_article_path(@discussion), :class => 'btn btn-primary col-xs-12 col-sm-12 col-md-4' %>
   </div>
 </div>
 

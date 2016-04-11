@@ -14,14 +14,30 @@ class Discussion < ActiveRecord::Base
   has_many :discussion_users
   has_many :followers, :through => :discussion_users, :source => :user
 
+
+  def selected_users
+    selected_user_list.to_s.split(",").map(&:strip)
+  end
+
+  def readable_by(current_user)
+    return true if current_user.has_role?(:admin)
+    return true if public
+    return true if user.email == current_user.email
+    return true if !public && selected_users.any? && selected_users.include?(current_user.email)
+    return false
+  end
+
   def add_auto_followers
-    User.where(:auto_follow => true).each do |user|
-      followers << user unless followers.include?(user)
+    if public
+      User.where(:auto_follow => true).each do |user|
+        followers << user unless followers.include?(user)
+      end
     end
   end
 
   def send_notifications
     User.where(:notify_me_on_discussion_create => true).each do |user|
+      next unless readable_by(user)
       Mailer.new_discussion(user,self).deliver
     end
   end

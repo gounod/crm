@@ -19,8 +19,13 @@ class DiscussionsController < ApplicationController
   end
 
   def show
-    @upload = Upload.new(discussion_id: @discussion.id)
-    respond_with(@discussion)
+    if @discussion.readable_by(current_user)
+      @upload = Upload.new(discussion_id: @discussion.id)
+      @allowed_emails = User.all.pluck(:email)
+      respond_with(@discussion)
+    else
+      redirect_to discussions_path()
+    end
   end
 
   def new
@@ -29,6 +34,11 @@ class DiscussionsController < ApplicationController
   end
 
   def edit
+    if @discussion.readable_by(current_user)
+      respond_with(@discussion)
+    else
+      redirect_to discussions_path()
+    end
   end
 
   def change_state
@@ -88,6 +98,6 @@ class DiscussionsController < ApplicationController
     end
 
     def discussion_params
-      params.require(:discussion).permit(:title, :description, :user, :state, :tag_list)
+      params.require(:discussion).permit(:title, :description, :user, :state, :tag_list, :public, :selected_user_list)
     end
 end

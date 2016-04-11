@@ -1,4 +1,4 @@
-<%= form_for @discussion, :html => { :class => "form-horizontal discussion" }, :remote => true do |f| %>
+<%= form_for @discussion, :html => { :class => "form-horizontal discussion", :role => "form" } do |f| %>
 
   <% if @discussion.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -21,15 +21,60 @@
     </div>
     <%=f.error_span(:title) %>
   </div>
-  <div class="form-group">
-    <div class="col-lg-12">
-      <%= f.text_area :description, :class => 'form-control wysiwyg', :placeholder => "Beschreibung" %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Zugriffsbeschränkung</h3>
     </div>
-    <%=f.error_span(:description) %>
+    <div class="panel-body">
+      <div class="checkbox">
+        <label>
+          <%= f.radio_button :public, true %> Öffentliches Thema (Alle WEG-Mitglieder können dieses Thema lesen)<br>
+          <%= f.radio_button :public, false %> Eingeschränkter Leserkreis (Nur ausgewählte WEG-Mitglieder können dieses Thema in der Übersicht sehen und lesen)
+        </label>
+      </div>
+      <div class="form-group">
+          <div class="col-lg-12">
+            Bitte geben sie dazu alle Emailadressen von bestehenden WEG-Accounts ein, die auf dieses Thema Zugriff haben sollen:
+            <%= f.text_area :selected_user_list, :class => 'form-control', :placeholder => "tim.test@gmx.de, tina.test@t-online.de, foo.bar@berlin.de" %>
+          </div>
+        </div>
+    </div>
   </div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Kurzbeschreibung des Themas</h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="form-group">
+        <div class="col-lg-12">
+          <%= f.text_area :description, :class => 'form-control wysiwyg', :placeholder => "Beschreibung" %>
+        </div>
+        <%=f.error_span(:description) %>
+      </div>
+    </div>
+</div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Schlagwörter</h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="form-group">
+        <div class="col-lg-12">
+          Werden in der Themenübersicht als Filter verwendet
+          <%= f.text_field :tag_list, :class => 'form-control', :placeholder => "Baufortschritt, Innenausbau, Abnahme, Gutachter, Gemeinschaftseigentum, Mängel" %>
+        </div>
+      </div>
+    </div>
+</div>
+
   <div class="form-group">
     <div class="col-lg-12">
-      <%= f.text_field :tag_list, :class => 'form-control', :placeholder => "Schlagwörter (kommagetrennt)" %>
+
     </div>
     <%=f.error_span(:tag_list) %>
   </div>
