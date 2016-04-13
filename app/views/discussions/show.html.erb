@@ -1,10 +1,15 @@
 <%- model_class = Discussion -%>
-<div class="page-header">
+<div id="discussion-show" class="page-header sticky col-sm-12 col-xs-12 col-md-12 col-lg-12">
   <h1><span class="hidden-sm hidden-xs">
     <% if !@discussion.public && @discussion.selected_users.any? %>
       <span class="glyphicon glyphicon-lock"></span>
     <% end %>
-    Thema: </span><%= @discussion.title %>
+    Thema: </span>
+    <%= @discussion.title %>
+    <div class="add-comment">
+      <%= link_to " Kommentar schreiben", new_discussion_article_path(@discussion), :class => 'btn btn-primary glyphicon glyphicon-comment' %>
+    </div>
+
     <div style="float:right">
       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>"), vote_discussion_path(@discussion, :vote => "like") %>
       &nbsp;
@@ -55,29 +60,29 @@
 <% end %>
 
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-offset-1 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-10 col-xs-10 col-md-10 col-lg-10">
     <% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion) || current_user.has_role?(:admin) %>
-      <%= link_to "Thema bearbeiten", edit_discussion_path(@discussion), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4' %>
-      <% if @discussion.state == "opened" %>
-        <%= link_to "Thema schließen", change_state_discussion_path(@discussion, :state => "closed"), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4' %>
+      <%= link_to "Thema bearbeiten", edit_discussion_path(@discussion), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-pencil' %>
+      <% if @discussion.state == "opened"%>
+        <%= link_to "Thema schließen", change_state_discussion_path(@discussion, :state => "closed"), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-stop' %>
       <% else %>
-        <%= link_to "Thema wieder öffnen", change_state_discussion_path(@discussion, :state => "opened"), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4' %>
+        <%= link_to "Thema wieder öffnen", change_state_discussion_path(@discussion, :state => "opened"), :class => 'btn btn-default col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-play' %>
       <% end %>
     <% end %>
     <% if @discussion.followers.include?(current_user) %>
-      <%= link_to "Diesem Thema nicht mehr folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning col-xs-12 col-sm-12 col-md-4' %>
+      <%= link_to "Diesem Thema nicht mehr folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-eye-close' %>
     <% else %>
-      <%= link_to "Diesem Thema folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning col-xs-12 col-sm-12 col-md-4' %>
+      <%= link_to "Diesem Thema folgen", change_following_discussion_path(@discussion), :class => 'btn btn-warning col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-eye-open' %>
     <% end %>
     <% if current_user.has_role?(:admin) %>
     <%= link_to "Löschen",
                   discussion_path(@discussion),
                   :method => 'delete',
                   :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                  :class => 'btn btn-danger col-xs-12 col-sm-12 col-md-4' %>
+                  :class => 'btn btn-danger col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-remove-circle' %>
     <% end %>
 
-    <%= link_to "Kommentar schreiben", new_discussion_article_path(@discussion), :class => 'btn btn-primary col-xs-12 col-sm-12 col-md-4' %>
+    <%= link_to "Kommentar schreiben", new_discussion_article_path(@discussion), :class => 'btn btn-primary col-xs-12 col-sm-12 col-md-4 glyphicon glyphicon-comment' %>
   </div>
 </div>
 
@@ -113,9 +118,11 @@
 
 
 
-<div>
+<div class="container">
   <div class="row">
-    <h2>Kommentare <small>(Neue zuerst)</small></h2>
+    <div class="col-sm-12 col-xs-12 col-md-12">
+      <h2>Kommentare <small>(Neue zuerst)</small></h2>
+    </div>
   </div>
 
   <% @discussion.articles.order("created_at DESC").each do |article| %>

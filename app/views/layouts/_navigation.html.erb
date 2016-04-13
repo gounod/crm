@@ -1,18 +1,18 @@
-  <%= nav_bar :fixed => :top, :responsive => true, :brand => "WEG Gounodstraße 47 - 57", :brand_link => root_path() do %>
+<%= nav_bar :fixed => :top, :responsive => true, :brand => "WEG Gounodstraße", :brand_link => root_path() do %>
   <%= menu_group :pull => :right do %>
-    <%= menu_item "Home", root_path %>
-    <%= menu_item "Blog", "http://blog.gounod.berlin", :target => "_blank" %>
-    <%= menu_item "Themen", discussions_path(:state => "opened") %>
+    <%= menu_item "", root_path, class: "glyphicon glyphicon-home" %>
+    <%= menu_item "Blog", "http://blog.gounod.berlin", :target => "_blank", class: "glyphicon glyphicon-picture" %>
+    <%= menu_item "Themen", discussions_path(:state => "opened"), class: "glyphicon glyphicon-list-alt" %>
 
-    <%= menu_item "Kontakt", contact_path() %>
+    <%= menu_item "Kontakt", contact_path(), class: "glyphicon glyphicon-envelope" %>
     <% if current_user.present? && current_user.has_role?(:admin) %>
-      <%= menu_item "Accounts", accounts_path %>
+      <%= menu_item "Accounts", accounts_path, class: "glyphicon glyphicon-folder-open" %>
     <% end %>
     <% if current_user.present? %>
-      <%= menu_item "Mein Profil", profile_path() %>
-      <%= menu_item "Abmelden", destroy_user_session_path(), :method => :delete %>
+      <%= menu_item "Profil", profile_path(), class: "glyphicon glyphicon-user" %>
+      <%= menu_item "Abmelden", destroy_user_session_path(), :method => :delete, class: "glyphicon glyphicon-log-out" %>
     <% else %>
-      <%= menu_item "Anmelden", new_user_session_path %>
+      <%= menu_item "Anmelden", new_user_session_path, class: "glyphicon glyphicon-log-in" %>
     <% end %>
   <% end %>
 <% end %>

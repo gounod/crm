@@ -1,27 +1,31 @@
 <%- model_class = Discussion -%>
-<div class="page-header">
-  <h2>Themen Übersicht</h2>
+
+<div id="discussion-index" class="sticky col-sm-12 col-xs-12 col-md-12 col-lg-12">
+  <div class="page-header">
+    Themen Übersicht:
     <%= link_to "Alle Themen", discussions_path(), :class => "btn #{@state.blank? ? 'btn-success' : 'btn-default'}" %>
     <%= link_to "Offene Themen", discussions_path(:state => "opened"), :class => "btn #{@state.present? && @state == 'opened' ? 'btn-success' : 'btn-default'} " %>
     <%= link_to "Geschlossene Themen", discussions_path(:state => "closed"), :class => "btn #{@state.present? && @state == 'closed' ? 'btn-success' : 'btn-default'}" %>
     <%= link_to "Neues Thema erstellen", new_discussion_path, :class => 'btn btn-primary' %>
-</div>
+  </div>
 
-<div class="row">
-  <div class="col-sm-12">
-    Filter:
-      <%= link_to "Alle", discussions_path(), :class => "btn btn-default" %>
-    <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
-      <%= link_to discussions_path(tag: tag.name), :class => "btn btn-default" do %>
-      <%= tag.name %>
-      <span class="badge"><%= tag.taggings_count %></span>
+  <div class="row">
+    <div class="col-sm-12">
+      Filter:
+        <%= link_to "Alle", discussions_path(), :class => "btn btn-default" %>
+      <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+        <%= link_to discussions_path(tag: tag.name), :class => "btn btn-default" do %>
+        <%= tag.name %>
+        <span class="badge"><%= tag.taggings_count %></span>
+        <% end %>
       <% end %>
-    <% end %>
-    </div>
+      </div>
+  </div>
 </div>
 
+<div class="row"><div class="col-sm-12">&nbsp;</div></div>
 
-<div class="table-responsive">
+<div class="table-responsive col-sm-12 col-xs-12 col-md-12">
   <table class="table table-striped">
     <thead>
       <tr>
