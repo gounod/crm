@@ -1,12 +1,26 @@
-<p><%= @greeting %>, es wurde ein neuer Beitrag erstellt:</p>
+<style>
+  body {
+    background-color: lightgrey;
+    background-image: url("http://www.gounod.berlin/assets/backgroundemail.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size:cover;
+  }
+</style>
 
-<h2><%= @article.discussion.title %></h2>
+<div style="margin: 10px auto; border:1px solid grey;border-radius:10px;padding:20px;background-color: white;">
+  <div style="color:grey">
+    <p><%= @greeting %>, <br>
+    <br>es wurde ein neuer Beitrag erstellt (<%= @article.try(:user).try(:short_name) %>):</p>
+  </div>
 
-<%= raw(@article.description) %>
-<br><br>
+  <h3><%= @article.discussion.title %></h3>
+  <%= raw(@article.description) %>
+  <br><br>
 
-<p>Mit freundlichen Grüßen
-<br>
-<br>
-www.gounod.berlin
-</p>
+  <div style="color:grey">
+    <p>Über folgenden Link sind Sie direkt angemeldet und im Thema:<br>
+    <%= link_to "http://www.gounod.berlin/discussions/#{@article.discussion.id}?auth_token=#{@user.authentication_token}", "http://www.gounod.berlin/discussions/#{@article.discussion.id}?auth_token=#{@user.authentication_token}" %>
+    </p>
+  </div>
+</div>

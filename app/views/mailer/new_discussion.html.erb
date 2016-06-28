@@ -1,13 +1,14 @@
-<p><%= @greeting %>, es wurde ein neues Thema eröffnet:</p>
+<div style="color:grey">
+<p><%= @greeting %>, <br>
+<br>es wurde ein neues Thema eröffnet (<%= @discussion.try(:user).try(:short_name) %>):</p>
+</div>
 
-<h2><%= @discussion.title %></h2>
-
+<h3><%= @discussion.title %></h3>
 <%= raw(@discussion.description) %>
 <br><br>
 
-
-<p>Mit freundlichen Grüßen
-<br>
-<br>
-www.gounod.berlin
+<div style="color:grey">
+<p>Über folgenden Link sind Sie direkt angemeldet und im Thema:
+<%= link_to "http://www.gounod.berlin/discussions/#{@discussion.id}?auth_token=#{@user.authentication_token}", "http://www.gounod.berlin/discussions/#{@discussion.id}?auth_token=#{@user.authentication_token}" %>
 </p>
+</div>
