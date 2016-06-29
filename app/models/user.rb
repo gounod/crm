@@ -39,4 +39,26 @@ class User < ActiveRecord::Base
     end
   end
 
+  def process_email_callback(params)
+
+    # Returned events and options are described at https://eu.mailjet.com/docs/event_tracking
+    case params['event']
+    when 'open'
+      Rails.logger.error "[Mailjet] Open event #{params['event']} for User #{self.inspect} -- DUMP #{params.inspect}"
+      # Mailjet's invisible pixel was downloaded: user allowed for images to be seen
+    when 'click'
+      # a link (tracked by Mailjet) was clicked
+    when 'bounce'
+      # is user's email valid? Recipient not found
+    when 'spam'
+      # gateway or user flagged you
+    when 'blocked'
+      # gateway or user blocked you
+    when 'typofix'
+      # email routed from params['original_address'] to params['new_address']
+    else
+      Rails.logger.fatal "[Mailjet] Unknown event #{params['event']} for User #{self.inspect} -- DUMP #{params.inspect}"
+    end
+  end
+
 end

@@ -26,6 +26,7 @@ class Mailer < ActionMailer::Base
     @user = user
     @greeting = "Hallo #{user.short_name}"
     @article = article
+    mail.header['X-MJ-CustomID'] = article.id
     mail to: user.email, :subject => "Neuer Beitrag: #{article.try(:discussion).try(:title)}"
   end
 

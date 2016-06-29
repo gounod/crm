@@ -22,5 +22,17 @@ module GounodCrm
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    #
+
+    config.middleware.use Mailjet::Rack::Endpoint, '/mailjet/callback' do |params|  # using the same URL you just set in Mailjet's administration
+      email = params['email'].presence || params['original_address'] # original_address is for typofix events
+
+      if user = User.find_by_email(email)
+        user.process_email_callback(params)
+      else
+        Rails.logger.fatal "[Mailjet] User not found: #{email} -- DUMP #{params.inspect}"
+      end
+    end
+
   end
 end
