@@ -28,7 +28,6 @@ class Mailer < ActionMailer::Base
     @article = article
     mail to: user.email, :subject => "Neuer Beitrag: #{article.try(:discussion).try(:title)}"
     mail.header['X-MJ-CustomID'] = article.id
-    mail.content_type 'multipart/mixed'
   end
 
 end
