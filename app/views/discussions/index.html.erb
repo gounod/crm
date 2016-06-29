@@ -44,6 +44,7 @@
     <tbody>
       <% @discussions.each do |discussion| %>
         <% next unless discussion.readable_by(current_user) %>
+        <% unread_count = discussion.unread_articles(current_user) %>
         <tr>
           <td>
             <% if !discussion.public && discussion.selected_users.any? %>
@@ -57,7 +58,7 @@
             <td class="hidden-sm hidden-xs"><%= link_to "mailto:metz@gounod.berlin?subject=ID#{discussion.id}: #{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
           <% end %>
           <td class="hidden-sm hidden-xs"><%= tag_label(t(discussion.state) , :success) %></td>
-          <td><center><%= badge(discussion.articles.count, :warning) %></center></td>
+          <td><center><%= discussion.articles.count %> <%= badge("#{unread_count} ungelesen", :warnng) if unread_count > 0 %></center></td>
           <td><center><%= badge(discussion.uploads.count, :warnng) %></center></td>
           <td><%= discussion.count_votes_up %></td>
           <td><%= discussion.count_votes_down %></td>

@@ -14,6 +14,11 @@ class Discussion < ActiveRecord::Base
   has_many :discussion_users
   has_many :followers, :through => :discussion_users, :source => :user
 
+  def unread_articles(user)
+    total_articles_count = articles.count
+    read_articles = UserArticle.where(user_id: user.id, article_id: article_ids).count
+    total_articles_count - read_articles
+  end
 
   def selected_users
     selected_user_list.to_s.split(",").map(&:strip)

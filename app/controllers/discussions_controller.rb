@@ -22,6 +22,9 @@ class DiscussionsController < ApplicationController
     if @discussion.readable_by(current_user)
       @upload = Upload.new(discussion_id: @discussion.id)
       @allowed_emails = User.all.pluck(:email)
+      @discussion.articles.each do |article|
+        UserArticle.where(user_id: current_user.id, article_id: article.id).first_or_create
+      end
       respond_with(@discussion)
     else
       redirect_to discussions_path()
