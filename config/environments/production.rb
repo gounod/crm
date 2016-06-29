@@ -83,16 +83,16 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :mailjet
   config.encoding = "utf-8"
-  config.action_mailer.smtp_settings = {
-    address: "smtp.mandrillapp.com",
-    port: 587,
-    authentication: "plain",
-    user_name: "agenda-konferenz@ikusei.de",
-    password: "ZgJ699PM1DgIHa_ONE1wbQ",
-    enable_starttls_auto: false
-  }
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.mandrillapp.com",
+  #   port: 587,
+  #   authentication: "plain",
+  #   user_name: "agenda-konferenz@ikusei.de",
+  #   password: "ZgJ699PM1DgIHa_ONE1wbQ",
+  #   enable_starttls_auto: false
+  # }
 
   YUBIKEYCLIENTID = "19340"
   YUBIKEYSECRETKEY = "M+U1TbvrhHeod3R/kR5jz1EV2/E="
