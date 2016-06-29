@@ -39,6 +39,21 @@
 
 <% if current_user %>
   <% content_for :sidebar do %>
+    <h3>Ungelesene Beiträge</h3>
+    <div class="list-group">
+      <% Discussion.where(:state => "opened").order("updated_at DESC").each do |discussion| %>
+        <% next unless discussion.readable_by(current_user) %>
+        <% unread_count = discussion.unread_articles(current_user) %>
+        <% next unless unread_count > 0 %>
+        <%= link_to discussion_path(discussion), :class=>"list-group-item" do %>
+          <% if !discussion.public && discussion.selected_users.any? %>
+            <span class="glyphicon glyphicon-lock"></span>
+          <% end %>
+          <%= discussion.title %> <%= badge(unread_count, :warning) %>
+        <% end %>
+      <% end %>
+    </div>
+
     <h3>Aktuelle Themen</h3>
     <div class="list-group">
       <% Discussion.where(:state => "opened").order("updated_at DESC").limit(10).each do |discussion| %>
