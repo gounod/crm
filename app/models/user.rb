@@ -50,11 +50,11 @@ class User < ActiveRecord::Base
       ua = UserArticle.where(user_id: self.id, article_id: article.id).first_or_create if article.present?
       # Mailjet's invisible pixel was downloaded: user allowed for images to be seen
     when 'click'
-      article_id = params["CustomID"]
-      article = Article.find_by_id(article_id) if article_id.present?
+      # article_id = params["CustomID"]
+      # article = Article.find_by_id(article_id) if article_id.present?
 
-      ua = UserArticle.where(user_id: self.id, article_id: article.id).first_or_create if article.present?
-      ua.clicked! if ua.present?
+      # ua = UserArticle.where(user_id: self.id, article_id: article.id).first_or_create if article.present?
+      # ua.clicked! if ua.present?
       # a link (tracked by Mailjet) was clicked
     when 'bounce'
       # is user's email valid? Recipient not found
