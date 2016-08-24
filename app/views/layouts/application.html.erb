@@ -43,7 +43,7 @@
     <div id="header"></div>
     <div id="sticky-anchor"></div>
 
-    <div class="">
+    <div id="content" class="">
       <div class="row">
         <% conent_width = (current_user.blank? || yield(:sidebar).present?) ? "col-lg-8" : "col-lg-12" %>
         <div class="<%= conent_width %>">

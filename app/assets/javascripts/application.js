@@ -32,7 +32,7 @@ $(document).ready(function() {
       }
     });
 
-  $('.wysiwyg').wysihtml5();
+  $('.wysiwyg').wysihtml5({supportTouchDevices:  true});
 
 });
 

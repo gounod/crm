@@ -2,14 +2,22 @@
 
 <div id="discussion-index" class="sticky col-sm-12 col-xs-12 col-md-12 col-lg-12">
   <div class="page-header">
-    Themen Übersicht:
-    <%= link_to "Alle Themen", discussions_path(), :class => "btn #{@state.blank? ? 'btn-success' : 'btn-default'}" %>
-    <%= link_to "Offene Themen", discussions_path(:state => "opened"), :class => "btn #{@state.present? && @state == 'opened' ? 'btn-success' : 'btn-default'} " %>
-    <%= link_to "Geschlossene Themen", discussions_path(:state => "closed"), :class => "btn #{@state.present? && @state == 'closed' ? 'btn-success' : 'btn-default'}" %>
-    <%= link_to "Neues Thema erstellen", new_discussion_path, :class => 'btn btn-primary' %>
+    <span class="hidden-sm hidden-xs">Themen Übersicht:</span>
+    <%= link_to raw("Alle <span class='hidden-sm hidden-xs'>Themen</span>"),
+        discussions_path(),
+        :class => "btn #{@state.blank? ? 'btn-success' : 'btn-default'}" %>
+    <%= link_to raw("Offene <span class='hidden-sm hidden-xs'>Themen</span>"),
+        discussions_path(:state => "opened"),
+        :class => "btn #{@state.present? && @state == 'opened' ? 'btn-success' : 'btn-default'} " %>
+    <%= link_to raw("Geschlossene <span class='hidden-sm hidden-xs'>Themen</span>"),
+        discussions_path(:state => "closed"),
+        :class => "btn #{@state.present? && @state == 'closed' ? 'btn-success' : 'btn-default'}" %>
+    <%= link_to raw("Neues <span class='hidden-sm hidden-xs'>Themen</span> erstellen"),
+        new_discussion_path,
+        :class => 'btn btn-primary' %>
   </div>
 
-  <div class="row hidden-xs">
+  <div class="row hidden-xs hidden-sm">
     <div class="col-sm-12">
       Filter:
         <%= link_to "Alle", discussions_path(), :class => "btn btn-default" %>
@@ -23,7 +31,7 @@
   </div>
 </div>
 
-<div class="row"><div class="col-sm-12">&nbsp;</div></div>
+<div class="row hidden-xs hidden-sm"><div class="col-sm-12">&nbsp;</div></div>
 
 <div class="table-responsive col-sm-12 col-xs-12 col-md-12">
   <table class="table table-striped">

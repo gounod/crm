@@ -38,7 +38,7 @@
   z-index:-1;
   height:500px;
   margin-top:-20px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   background-image: url("/assets/background.jpg");
   background-repeat: no-repeat;
   background-position: center top;
@@ -49,6 +49,17 @@
   -o-background-size: cover; /* Opera*/
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/background.jpg',     sizingMethod='scale');
   -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/background.jpg', sizingMethod='scale');
+}
+
+@media (max-width: 600px){
+  #header{
+    height:200px;
+  }
+}
+
+
+.page-header{
+  margin-top: 10px;
 }
 
 .article_divider{
