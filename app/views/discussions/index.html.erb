@@ -22,9 +22,10 @@
       Filter:
         <%= link_to "Alle", discussions_path(), :class => "btn btn-default" %>
       <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
-        <%= link_to discussions_path(tag: tag.name), :class => "btn btn-default" do %>
-        <%= tag.name %>
-        <span class="badge"><%= tag.taggings_count %></span>
+        <% next if tag.taggings_count == 1 %>
+        <%= link_to discussions_path(tag: tag.name), :class => "btn btn-default #{css_class}" do %>
+          <%= tag.name %>
+          <span class="badge"><%= tag.taggings_count %></span>
         <% end %>
       <% end %>
       </div>
@@ -39,7 +40,9 @@
       <tr>
         <th>Titel</th>
         <th class="hidden-sm hidden-xs">Moderator</th>
-        <th class="hidden-sm hidden-xs"><%= model_class.human_attribute_name(:state) %></th>
+        <% unless params[:state].present? %>
+          <th class="hidden-sm hidden-xs"><%= model_class.human_attribute_name(:state) %></th>
+        <% end %>
         <th>Beiträge</th>
         <th>Bilder</th>
         <th><span class='glyphicon glyphicon-thumbs-up'></span></th>
@@ -65,7 +68,9 @@
           <% else %>
             <td class="hidden-sm hidden-xs"><%= link_to "mailto:metz@gounod.berlin?subject=ID#{discussion.id}: #{discussion.title}" do %><span class="glyphicon glyphicon-envelope"></span> <%= discussion.try(:user).try(:short_name) %><% end %></td>
           <% end %>
-          <td class="hidden-sm hidden-xs"><%= tag_label(t(discussion.state) , :success) %></td>
+          <% unless params[:state].present? %>
+            <td class="hidden-sm hidden-xs"><%= tag_label(t(discussion.state) , :success) %></td>
+          <% end %>
           <td><center><%= discussion.articles.count %> <%= badge("#{unread_count} ungelesen", :warnng) if unread_count > 0 %></center></td>
           <td><center><%= badge(discussion.uploads.count, :warnng) %></center></td>
           <td><%= discussion.count_votes_up %></td>

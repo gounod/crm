@@ -41,22 +41,29 @@
   </dl>
 </div>
 
-<% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion) || current_user.has_role?(:admin) %>
+<% if @discussion.user == current_user || current_user.has_role?(:moderator, @discussion)  || current_user.has_role?(:admin) %>
+  <% if @discussion.selected_users.any? %>
   <div class="col-sm-12 col-xs-12 col-md-12">
     Zugriffsbeschränkt für: (Diese Liste ist nur für den Moderator sichtbar)
-    <dl class="dl-horizontal">
-      <% @discussion.selected_users.each do |email| %>
-        <dt><strong><%= email %></strong></dt>
-        <dd>
-        <% if @allowed_emails.include?(email) %>
-          <span class="glyphicon glyphicon-ok"></span>
-        <% else %>
-          <span class="glyphicon glyphicon-remove"></span> (Diese Email ist keinem WEG-Mitglied zugeordnet)
-        <% end %>
-        </dd>
+    <table class="table table-striped">
+      <% @discussion.selected_users.each_slice(4) do |emails| %>
+        <tr>
+          <% emails.each do |email| %>
+            <% class_warning = @allowed_emails.include?(email) ? "" : "danger" %>
+            <td class="<%= class_warning %>"><strong><%= email %></strong>
+
+            <% if @allowed_emails.include?(email) %>
+              <span class="glyphicon glyphicon-ok"></span>
+            <% else %>
+              <span class="glyphicon glyphicon-remove"></span>
+            <% end %>
+            </td>
+          <% end %>
+        </tr>
       <% end %>
-    </dl>
+    </table>
   </div>
+  <% end %>
 <% end %>
 
 <div class="row">
