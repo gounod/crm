@@ -7,7 +7,9 @@ set :repository_cache, "git_cache"
 set :deploy_via, :remote_cache
 
 set :application, 'gounod'
-set :repo_url, 'git@github.com:gounod/crm.git'
+#set :repo_url, 'git@github.com:gounod/crm.git'
+set :repo_url, 'https://github.com/gounod/crm.git'
+
 
 set :deploy_to, '/home/gounod/website'
 
